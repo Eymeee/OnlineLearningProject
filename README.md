@@ -67,8 +67,16 @@ principaux a la racine.
 ├── train_common.py
 ├── train_classification.py
 ├── train_regression.py
+├── training_reuse_guide.md
 ├── utils.py
 ├── tp1_related.ipynb
+├── tp2_related.ipynb
+├── tp3_related.ipynb
+├── tp4_related.ipynb
+├── tp5_related.ipynb
+├── outputs/
+│   ├── classification/
+│   └── regression/
 └── models/
     ├── __init__.py
     ├── cnn_simple.py
@@ -77,186 +85,22 @@ principaux a la racine.
 
 ### Role de chaque fichier
 
-#### `README.md`
-
-Document de presentation du projet:
-
-- objectif
-- structure du repo
-- commandes principales
-- avancement
-
-#### `mini_projet.pdf`
-
-Sujet officiel du mini-projet. C'est la source de reference pour verifier que
-le travail est bien aligne avec les consignes.
-
-#### `pyproject.toml`
-
-Configuration du projet Python et declaration des dependances:
-
-- `torch`
-- `torchvision`
-- `numpy`
-- `pandas`
-- `matplotlib`
-- `scikit-learn`
-- etc.
-
-#### `uv.lock`
-
-Fichier de lock des dependances pour reproduire l'environnement avec `uv`.
-
-#### `.gitignore`
-
-Ignore notamment:
-
-- `data/`
-- les PDFs temporaires
-- `__pycache__/`
-
-#### `main.py`
-
-Point d'entree principal du projet.
-
-Il sert a:
-
-- afficher l'etat du projet avec `status`
-- lancer la classification avec `train-classification`
-- lancer la regression avec `train-regression`
-
-#### `experiment_spec.py`
-
-Centralise le cadre experimental retenu.
-
-Ce fichier fixe:
-
-- le dataset cible
-- les deux modeles utilises
-- la tache de regression
-- la tache de classification
-- la convention de labels
-- la perte de classification
-
-Son role est d'eviter de disperser les choix experimentaux dans plusieurs
-scripts.
-
-#### `data_loader.py`
-
-Gestion du chargement des donnees.
-
-Ce fichier contient:
-
-- la classe `CelebADataset`
-- la construction des transformations image
-- la gestion des splits `train/val/test`
-- la creation des `DataLoader`
-- la generation de la cible de regression
-- la conversion des labels de classification selon le schema choisi
-
-#### `train_common.py`
-
-Briques communes pour l'entrainement.
-
-On y trouve:
-
-- la creation des modeles a partir du registre
-- la perte hinge binaire
-- la selection du device
-- la boucle d'entrainement d'une epoch
-- l'evaluation pour la regression
-- l'evaluation pour la classification
-- quelques utilitaires de parsing et de sauvegarde
-
-#### `train_classification.py`
-
-Script CLI dedie a la classification binaire.
-
-Il gere:
-
-- les arguments de ligne de commande
-- la creation des DataLoaders
-- la selection du modele
-- la perte hinge
-- l'entrainement
-- la validation
-- la sauvegarde du meilleur checkpoint
-- l'export des metriques
-
-#### `train_regression.py`
-
-Script CLI dedie a la regression.
-
-Il gere:
-
-- les arguments de ligne de commande
-- la definition de la cible de regression
-- l'entrainement en MSE
-- la validation
-- l'evaluation finale
-- l'export des metriques
-
-#### `utils.py`
-
-Fichier de fonctions utilitaires liees aux TPs.
-
-Il contient deja des briques pour:
-
-- covering number
-- line search
-- validation croisee
-- regularisation L1/L2
-- metriques de classification
-- projection sur boule L2
-- normalisation
-- plotting
-- normes et normes duales
-- regret
-
-Ce fichier sert de base theorique et algorithmique pour relier le projet aux
-consignes TP1 a TP5.
-
-#### `tp1_related.ipynb`
-
-Notebook dedie a TP1.
-
-Il sert a:
-
-- explorer le dataset
-- construire ou verifier le split
-- analyser les attributs
-- etudier le covering number
-- ajouter progressivement les experiences TP1
-
-Il a ete enrichi pour couvrir davantage les attentes du sujet TP1.
-
-#### `models/__init__.py`
-
-Point d'entree du package de modeles. Pour l'instant, il est minimal.
-
-#### `models/cnn_simple.py`
-
-Implementation de `CNN1`, une architecture volontairement simple.
-
-Caracteristiques:
-
-- peu de couches convolutionnelles
-- architecture legere
-- sert de baseline
-
-#### `models/cnn_improved.py`
-
-Implementation de `CNN2`, une architecture plus riche.
-
-Caracteristiques:
-
-- plus profonde
-- batch normalization
-- dropout
-- capacite plus elevee
-
-Elle sert a comparer la complexite du modele et l'impact sur biais/variance et
-performance.
+- `README.md` : vue d'ensemble, structure, commandes et avancement.
+- `mini_projet.pdf` : sujet officiel de reference.
+- `pyproject.toml` / `uv.lock` : dependances et verrouillage d'environnement.
+- `.gitignore` : ignore `data/`, caches et fichiers temporaires.
+- `main.py` : point d'entree principal (`status`, regression, classification).
+- `experiment_spec.py` : cadre experimental fige du projet.
+- `data_loader.py` : dataset CelebA, transforms, splits et `DataLoader`.
+- `train_common.py` : briques communes d'entrainement, evaluation et sauvegarde.
+- `train_classification.py` : entrainement de la classification binaire.
+- `train_regression.py` : entrainement de la regression.
+- `training_reuse_guide.md` : guide sur la reutilisation ou non des entrainements selon TP1 a TP5.
+- `utils.py` : fonctions utilitaires reliees aux TPs (`covering number`, line search, regularisation, regret, normes, etc.).
+- `tp1_related.ipynb` a `tp5_related.ipynb` : un notebook par TP, aligne sur le PDF.
+- `models/cnn_simple.py` : implementation de `CNN1`.
+- `models/cnn_improved.py` : implementation de `CNN2`.
+- `outputs/` : checkpoints, metriques, configurations et courbes sauvegardees.
 
 ## 4. Donnees attendues
 
@@ -345,6 +189,14 @@ ou avec l'environnement du projet:
   - line search
   - biais-variance
   - validation et regularisation
+- Les notebooks `tp2_related.ipynb`, `tp3_related.ipynb`, `tp4_related.ipynb`
+  et `tp5_related.ipynb` ont ete ajoutes et structures selon le PDF.
+- Les scripts d'entrainement sauvegardent maintenant les artefacts dans
+  `outputs/`:
+  - checkpoint
+  - metriques
+  - configuration
+  - courbe de loss
 - `torch` et les dependances principales ont ete installes dans la `.venv`.
 
 ### Ce qui bloque encore
@@ -357,14 +209,9 @@ ou avec l'environnement du projet:
 ### Ce qui reste a faire
 
 - Ajouter les donnees dans `data/`
-- Executer proprement le notebook TP1
+- Executer proprement les notebooks `tp1_related.ipynb` a `tp5_related.ipynb`
 - Verifier et corriger les cellules si des erreurs runtime apparaissent
-- Creer un notebook dedie pour chaque TP:
-  - `tp2_related.ipynb`
-  - `tp3_related.ipynb`
-  - `tp4_related.ipynb`
-  - `tp5_related.ipynb`
-- Ajouter les experiences comparees demandees par le sujet
+- Lancer les scripts d'entrainement complets sur les vraies donnees
 - Produire les tableaux, figures et conclusions finales
 - Rediger le rapport final
 
