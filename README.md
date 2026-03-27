@@ -33,7 +33,6 @@ Le cadre experimental retenu actuellement est le suivant:
 ├── pyproject.toml
 ├── uv.lock
 ├── .gitignore
-├── main.py
 ├── experiment_spec.py
 ├── data_loader.py
 ├── train_common.py
@@ -57,7 +56,6 @@ Le cadre experimental retenu actuellement est le suivant:
 
 ### Role de fichiers
 
-- `main.py` : point d'entree principal (`regression`, `classification`).
 - `experiment_spec.py` : cadre experimental fige du projet.
 - `data_loader.py` : dataset CelebA loader, transforms, et splits.
 - `train_common.py` : briques communes d'entrainement, evaluation et sauvegarde.
